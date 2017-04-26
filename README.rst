@@ -5,8 +5,6 @@ Aplicação Django para controle de ramais Câmara Municipal de Curitiba
 
 
 
-.. contents::
-
 .. section-numbering::
 
 
