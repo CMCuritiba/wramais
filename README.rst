@@ -15,14 +15,16 @@ Instalar componentes via bower
 ------------------------------
 
 .. code-block:: bash
-	$ python manage.py bower_install
+
+    $ python manage.py bower_install
 
 
 Gerar e comprimir arquivos css e js
 -----------------------------------
 
 .. code-block:: bash
-	$ python manage.py collectstatic
+
+    $ python manage.py collectstatic
 
 
 :License: MIT
