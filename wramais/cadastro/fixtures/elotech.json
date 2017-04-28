@@ -1,0 +1,71 @@
+[
+	{
+        "model": "cadastro.vsetor", 
+        "fields": {
+            "set_id": 1, 
+            "set_nome": "Diretoria Geral",
+            "set_sigla": "DG",
+            "etr_id": 1,
+            "set_ativo": 1
+        }
+    },
+    {
+        "model": "cadastro.vsetor", 
+        "fields": {
+            "set_id": 4, 
+            "set_nome": "Departamento de Administração e Finanças",
+            "set_sigla": "DAF",
+            "set_id_superior": 1,
+            "etr_id": 1,
+            "set_ativo": 1
+        }
+    },
+    {
+        "model": "cadastro.vsetor", 
+        "fields": {
+            "set_id": 27, 
+            "set_nome": "Diretoria de Informática",
+            "set_sigla": "DIF",
+            "set_id_superior": 4,
+            "etr_id": 1,
+            "set_ativo": 1
+        }
+    },
+    {
+        "model": "cadastro.vsetor", 
+        "fields": {
+            "set_id": 171, 
+            "set_nome": "Divisão de Desenvolvimento De Sistemas",
+            "set_sigla": "DDS-1",
+            "set_id_superior": 27,
+            "etr_id": 1,
+            "set_ativo": 1
+        }
+    },
+
+	{
+        "model": "cadastro.vpessoa", 
+        "fields": {
+        	"pes_matricula": 2179,
+            "pes_nome": "Alexandre Odoni",
+            "set_id": 171
+        }
+    },    
+    {
+        "model": "cadastro.vpessoa", 
+        "fields": {
+        	"pes_matricula": 9842,
+            "pes_nome": "Nilton Cordoni Junior",
+            "set_id": 1
+        }
+    },
+    {
+        "model": "cadastro.vpessoa", 
+        "fields": {
+        	"pes_matricula": 2135,
+            "pes_nome": "Aline Bogo - Diretor De Departamento Fg-8",
+            "set_id": 4
+        }
+    }
+
+]
