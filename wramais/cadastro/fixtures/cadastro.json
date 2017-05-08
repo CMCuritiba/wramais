@@ -1,0 +1,19 @@
+[
+	{
+        "model": "cadastro.ramal", 
+        "fields": {
+            "id": 1, 
+            "setor": 171,
+            "pessoa": 2179,
+            "numero": "2579"
+        }
+    },
+    {
+        "model": "cadastro.ramal", 
+        "fields": {
+            "id": 2, 
+            "setor": 171,
+            "numero": "2580"
+        }
+    }
+]

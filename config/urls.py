@@ -9,6 +9,9 @@ from django.views.generic import TemplateView
 from django.views import defaults as default_views
 
 urlpatterns = [
+    # Your stuff: custom urls includes go here
+    url(r'^cadastro/', include('wramais.cadastro.urls', namespace='cadastro')),
+    url(r'^autentica/', include('wramais.autentica.urls', namespace='autentica')),
     url(r'^$', TemplateView.as_view(template_name='pages/home.html'), name='home'),
     url(r'^about/$', TemplateView.as_view(template_name='pages/about.html'), name='about'),
 

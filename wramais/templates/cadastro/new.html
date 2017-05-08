@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}Inclusão de Ramal{% endblock %}
+
+{% block content %}
+
+<form action="" method="post" id="formulario">
+	{% crispy form %}
+
+	<div class="col-md-12 row"> 
+		<div class="col-md-6"> 
+			<div class="form-group"> 
+				<div class="controls "> <input type="submit" name="save" value="Salvar" class="btn btn-primary" id="submit-id-save"/> </div>
+			</div>
+
+		</div>
+	</div>
+</form>
+
+{% endblock %}
+
+{% block extra_javascript %}
+
+<script>
+
+	$(document).ready(function () {
+		$('#id_setor').on('change', function() {
+    		atualizaPessoas();
+    	})
+
+    	atualizaPessoas();
+	});
+
+	function pesquisa() {
+		$('#formulario').submit();
+	}
+
+	function novo() {
+		$(location).attr('href','novo/');
+	}
+
+
+	function atualizaPessoas() {
+		$('#id_pessoa').children().remove().end().append('<option selected value="">GERAL</option>') ;
+		if ($('#id_setor option:selected').val() == '' || $('#id_setor option:selected').val() == '0') {
+			request_url = '/cadastro/api/pessoas/0';
+        }
+       	else {
+    		  request_url = '/cadastro/api/pessoas/' + $('#id_setor option:selected').val();
+        }
+		$.ajax({
+			url: request_url,
+			dataType: 'json',
+			success: function(result){
+				var toAppend = '';
+				$.each(result, function(index, element) {
+					if ('{{form.pessoa.value}}' != 'None' && element.id == '{{form.pessoa.value}}')
+						toAppend += '<option selected="selected" value="' + element.id + '">' + element.nome + '</option>';
+					else
+						toAppend += '<option value="' + element.id + '">' + element.nome + '</option>';
+				});
+				$('#id_pessoa').append(toAppend);
+			},
+			error: function(xhr, status, error) {
+				alert('Erro ao carregar Pessoas');
+				alert(xhr.readyState);
+				alert(status);
+				alert(error);
+			}
+		})	
+    }
+
+</script>
+
+{% endblock %}

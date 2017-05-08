@@ -5,8 +5,8 @@
             "set_id": 1, 
             "set_nome": "Diretoria Geral",
             "set_sigla": "DG",
-            "etr_id": 1,
-            "set_ativo": 1
+            "set_ativo": 1,
+            "set_tipo": "N"
         }
     },
     {
@@ -16,8 +16,8 @@
             "set_nome": "Departamento de Administração e Finanças",
             "set_sigla": "DAF",
             "set_id_superior": 1,
-            "etr_id": 1,
-            "set_ativo": 1
+            "set_ativo": 1,
+            "set_tipo": "N"
         }
     },
     {
@@ -27,8 +27,8 @@
             "set_nome": "Diretoria de Informática",
             "set_sigla": "DIF",
             "set_id_superior": 4,
-            "etr_id": 1,
-            "set_ativo": 1
+            "set_ativo": 1,
+            "set_tipo": "N"
         }
     },
     {
@@ -38,8 +38,8 @@
             "set_nome": "Divisão de Desenvolvimento De Sistemas",
             "set_sigla": "DDS-1",
             "set_id_superior": 27,
-            "etr_id": 1,
-            "set_ativo": 1
+            "set_ativo": 1,
+            "set_tipo": "N"
         }
     },
 

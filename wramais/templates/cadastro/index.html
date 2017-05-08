@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}Ramais{% endblock %}
+
+
+{% block content %}
+	<br>
+	<div class="panel panel-default">
+		<div class="panel-heading">Manutenção de Ramais</div>
+        <div class="panel-body">
+    
+			<form action="" method="get" id="formulario">
+				{% crispy form %}
+			</form>
+
+			<form id="frmDeleta" name="frmDeleta" method="POST" action="">
+				{% csrf_token %}
+				<input type="hidden" name="pk" id="pk" />
+			</form>
+		</div>
+	</div>
+
+	<table id="tabela" class="table table-striped table-bordered table-hover">
+		<thead>
+			<tr>
+				<th>Setor</th>
+				<th>Ramal</th>
+				<th>Pessoa</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for item in lista_ramais %}
+				<tr>
+					<td><a href="altera/{{ item.id }}">{{ item.setor.set_nome }}</a></td>
+					<td><a href="altera/{{ item.id }}">{{ item.numero }}</a></td>
+					<td><a href="altera/{{ item.id }}">{{ item.pessoa.pes_nome }}</a></td>
+					<td class="text-center"><a href="deleta/{{ item.id }}"><span class="glyphicon glyphicon-trash text-danger"></span></a></td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+{% endblock %}
+
+
+{% block extra_javascript %}
+
+<script>
+
+	$(document).ready(function () {
+		$('#id_setor').on('change', function() {
+    		atualizaPessoas();
+    	})
+
+    	atualizaPessoas();
+
+    	$('#tabela').DataTable({
+    		"language": {
+                "info": "Páginas _PAGE_ de _PAGES_",
+                "emptyTable": "Nenhum ramal encontrado",
+                "decimal": ",",
+                "thousands": ".",
+                "oPaginate": {
+                    "sFirst": '<span class="glyphicon glyphicon-fast-backward"></span>',
+                    "sLast": '<span class="glyphicon glyphicon-fast-forward"></span>',
+                    "sNext": '<span class="glyphicon glyphicon-forward"></span>',
+                    "sPrevious": '<span class="glyphicon glyphicon-backward"></span>'
+                }
+            },
+            "bLengthChange": false,
+            "bFilter": false,
+            "bInfo": false,
+            "sPaginationType": "full_numbers",
+    	});
+	});
+
+	function pesquisa() {
+		$('#formulario').submit();
+	}
+
+	function novo() {
+		$(location).attr('href','novo/');
+	}
+
+
+	function atualizaPessoas() {
+    	$('#id_pessoa').children().remove().end().append('<option selected value="">GERAL</option>') ;
+       	if ($('#id_setor option:selected').val() == '')
+       		request_url = '/cadastro/api/pessoas/0';
+       	else
+    		request_url = '/cadastro/api/pessoas/' + $('#id_setor option:selected').val();
+			$.ajax({
+	      		url: request_url,
+      			dataType: 'json',
+      			success: function(result){
+	      			var toAppend = '';
+      				$.each(result, function(index, element) {
+	      				if (element.id == {{form.pessoa.value}})
+      						toAppend += '<option selected="selected" value="' + element.id + '">' + element.nome + '</option>';
+      					else
+	      					toAppend += '<option value="' + element.id + '">' + element.nome + '</option>';
+      				});
+      				$('#id_pessoa').append(toAppend);
+      			},
+      			error: function(xhr, status, error) {
+	        		alert('Erro ao carregar Pessoas');
+            		alert(xhr.readyState);
+            		alert(status);
+            		alert(error);
+      			}
+    		})	
+    }
+
+    function exclui(id) {
+        var r = confirm('Confirma a exclusão do ramal ?')
+        if (r == true) {
+            $("#pk").val(id);
+            $("#frmDeleta").attr('action', 'exclui/' +  $("#pk").val() + '/');
+            $("#frmDeleta").submit();       
+        }
+    }
+
+    $('#tabela')
+		.removeClass( 'display' )
+		.addClass('table table-striped table-bordered');
+
+</script>
+
+
+
+{% endblock %}

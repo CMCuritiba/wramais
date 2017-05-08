@@ -71,7 +71,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    #'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -336,6 +336,8 @@ PIPELINE = {
             'source_filenames': (
               'bootstrap/dist/css/bootstrap.css',
               'jasny-bootstrap/dist/css/jasny-bootstrap.css',
+              'datatables/media/css/jquery.dataTables.css',
+              'datatables/media/css/dataTables.bootstrap.css',
               'login.css',
             ),
             'output_filename': 'css/master.css',
@@ -348,6 +350,8 @@ PIPELINE = {
               'bootstrap/dist/js/bootstrap.js',
               'jasny-bootstrap/dist/js/jasny-bootstrap.js',
               'underscore/underscore.js',
+              'datatables/media/js/jquery.dataTables.js',
+              'datatables/media/js/dataTables.bootstrap.js',
             ),
             'output_filename': 'js/master.js',
         }
@@ -364,7 +368,9 @@ BOWER_INSTALLED_APPS = (
     'jquery',
     'underscore',
     'bootstrap',
-    'jasny-bootstrap'
+    'jasny-bootstrap',
+    'datatables',
+    'datatables-bootstrap3'
 )
 
 # ALTERAÇÕES NO USER PARA GUARDAR INFO DO LDAP
