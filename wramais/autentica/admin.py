@@ -4,6 +4,7 @@ from django.contrib.auth.admin import UserAdmin
 from django.contrib import admin
 
 from .models import User
+from django.contrib.sites.models import Site
 
 class CustomUserAdmin(UserAdmin):
 	model = User
@@ -27,5 +28,7 @@ class CustomUserAdmin(UserAdmin):
 	ordering = ('username', 'lotado')
 	search_fields = ('username', )
 	list_filter = ('lotado', )
+
+admin.site.unregister(Site)
 
 admin.site.register(User, CustomUserAdmin)
