@@ -1,4 +1,4 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
+from braces import views
 
-class RamaisLoginRequired(LoginRequiredMixin):
+class RamaisLoginRequired(views.LoginRequiredMixin, views.SuperuserRequiredMixin):
 	login_url = "/autentica/loga/"

@@ -9,6 +9,7 @@ from django.shortcuts import render_to_response
 import json
 from django.core import serializers
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.contrib import messages
 
 from .models import VPessoa, Ramal
 from .forms import RamalPesquisaForm, RamalForm
@@ -92,8 +93,12 @@ class CadastroRamaisUpdateView(RamaisLoginRequired, SuccessMessageMixin, UpdateV
 #--------------------------------------------------------------------------------------
 class CadastroRamaisDeleteView(RamaisLoginRequired, SuccessMessageMixin, DeleteView):
 	model = Ramal
-	success_url = reverse_lazy('index')
+	success_url = '/cadastro/'
 	success_message = "Ramal excluído com sucesso."
 
 	def get(self, request, *args, **kwargs):
 		return self.post(request, *args, **kwargs)		
+
+	def delete(self, request, *args, **kwargs):
+		messages.success(self.request, self.success_message)
+		return super(CadastroRamaisDeleteView, self).delete(request, *args, **kwargs)

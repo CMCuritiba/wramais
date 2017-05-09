@@ -36,7 +36,7 @@
 					<td><a href="altera/{{ item.id }}">{{ item.setor.set_nome }}</a></td>
 					<td><a href="altera/{{ item.id }}">{{ item.numero }}</a></td>
 					<td><a href="altera/{{ item.id }}">{{ item.pessoa.pes_nome }}</a></td>
-					<td class="text-center"><a href="deleta/{{ item.id }}"><span class="glyphicon glyphicon-trash text-danger"></span></a></td>
+					<td class="text-center"><a href="javascript:exclui({{ item.id }})"><span class="glyphicon glyphicon-trash text-danger"></span></a></td>
 				</tr>
 			{% endfor %}
 		</tbody>
@@ -116,7 +116,7 @@
         var r = confirm('Confirma a exclusão do ramal ?')
         if (r == true) {
             $("#pk").val(id);
-            $("#frmDeleta").attr('action', 'exclui/' +  $("#pk").val() + '/');
+            $("#frmDeleta").attr('action', '/cadastro/exclui/' +  $("#pk").val() + '/');
             $("#frmDeleta").submit();       
         }
     }
