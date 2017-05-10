@@ -96,9 +96,6 @@ class CadastroRamaisDeleteView(RamaisLoginRequired, SuccessMessageMixin, DeleteV
 	success_url = '/cadastro/'
 	success_message = "Ramal excluído com sucesso."
 
-	def get(self, request, *args, **kwargs):
-		return self.post(request, *args, **kwargs)		
-
 	def delete(self, request, *args, **kwargs):
 		messages.success(self.request, self.success_message)
 		return super(CadastroRamaisDeleteView, self).delete(request, *args, **kwargs)
