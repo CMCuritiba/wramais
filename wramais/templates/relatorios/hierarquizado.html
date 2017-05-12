@@ -1,0 +1,77 @@
+{% extends "easy_pdf/base.html" %}
+{% load relatoriotags %}
+
+{% block layout_style %}
+    <style type="text/css">
+        @page {
+            size: {{ pagesize|default:"A4" }};
+            margin-left: 1.5cm;
+            margin-right: 1cm;
+            margin-top: 4cm;
+            margin-bottom: 1cm;
+            @frame header {
+                -pdf-frame-content: page-header;
+                margin-top: 1cm;
+                margin-right: 1mm;
+                margin-bottom: 1cm;
+                margin-left: 1.5cm;
+            }
+        }
+    </style>
+{% endblock %}
+
+{% block extra_style %}
+    <style type="text/css">
+        .header h1 {
+            font-size: 24px;
+            font-weight: normal;
+        }
+
+        .header h2 {
+            font-size: 18px;
+            font-weight: normal;
+        }
+
+        table.bordered {
+            border-top: 0.1pt solid #999999;
+            border-bottom: 0.1pt solid #999999;
+        }
+
+        tr.departamento {
+            padding-top: 10px;
+        }
+
+        tr, td, th { 
+            border-top: 0.1pt solid #999999;
+            border-bottom: 0.1pt solid #999999;
+            padding-top: 5px;
+        }
+
+    </style>
+{% endblock %}   
+
+{% block page_header %}
+    <div id="page-header">
+        <div class="header">
+            <h1 align="center">Câmara Municipal de Curitiba</h1>
+            <h2 align="center">Lista de Ramais</h2>
+        </div>
+    </div>
+{% endblock %}   
+
+{% block content %}
+    <div id="content">
+        <div class="main">
+        {% if lista_ramais %}
+            <table class="bordered">
+                {% regroup lista_ramais by setor.set_id_superior as lista_agrupada %}
+                {% for item in lista_agrupada %}
+                    {% for ramal in item.list %}
+                        <td width="2400px">{{ ramal.setor.set_nome|formata_setor }}</td><td width="800px">{{ ramal.pessoa.pes_nome|formata_pessoa|retira_fg }}</td><td align='right' width="80px">{{ ramal.numero }}</td></tr>
+                    {% endfor %}
+                {% endfor %}
+            </table>
+        {% endif %}
+    </div>
+    </div>
+{% endblock %}   

@@ -5,7 +5,7 @@
 wheel==0.29.0
 
 # Bleeding edge Django
-django==1.10.5
+django==1.10.7
 
 # Configuration
 django-environ==0.4.1
@@ -45,3 +45,7 @@ django-pipeline==1.6.12
 
 # Django Bower
 django-bower==5.2.0
+
+# Django Easy PDF
+django-easy-pdf
+WeasyPrint

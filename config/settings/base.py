@@ -54,12 +54,14 @@ THIRD_PARTY_APPS = [
      'compressor',
      'django_python3_ldap',
      'ldapdb',
+     'easy_pdf'
 ]
 
 # Apps specific for this project go here.
 LOCAL_APPS = [
     'wramais.autentica.apps.AutenticaConfig',
     'wramais.cadastro.apps.CadastroConfig',
+    'wramais.relatorios.apps.RelatoriosConfig',
 ]
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps

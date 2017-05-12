@@ -54,7 +54,8 @@ class CadastroRamaisIndexView(RamaisLoginRequired, SuccessMessageMixin, FormView
 		if pessoa == '':
 			pessoa = '0'
 
-		lista_ramais = Ramal.objects.order_by('setor__set_nome')
+		#lista_ramais = Ramal.objects.order_by('setor__set_nome')
+		lista_ramais = Ramal.objects.all()
 		if (setor != '' and setor != '0'):
 			lista_ramais = lista_ramais.filter(setor__set_id=setor)
 		if (pessoa != '' and pessoa != '0'):

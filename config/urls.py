@@ -12,6 +12,7 @@ urlpatterns = [
     # Your stuff: custom urls includes go here
     url(r'^cadastro/', include('wramais.cadastro.urls', namespace='cadastro')),
     url(r'^autentica/', include('wramais.autentica.urls', namespace='autentica')),
+    url(r'^relatorios/', include('wramais.relatorios.urls', namespace='relatorios')),
     url(r'^$', TemplateView.as_view(template_name='pages/home.html'), name='home'),
     url(r'^about/$', TemplateView.as_view(template_name='pages/about.html'), name='about'),
 

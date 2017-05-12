@@ -23,7 +23,7 @@ class Migration(migrations.Migration):
     			set_nome character varying(500) not null,
     			set_sigla character varying(100) not null,
     			set_id_superior integer,
-    			set_ativo integer not null, 
+    			set_ativo boolean not null, 
                 set_tipo character varying(1)
     		);
 

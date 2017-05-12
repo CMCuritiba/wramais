@@ -19,7 +19,7 @@ from datetime import datetime
 
 class RamalPesquisaForm(forms.Form):
 
-	setor = forms.ModelChoiceField(label='Setor', queryset=VSetor.objects.all().order_by('set_nome'), required=True, empty_label='TODOS OS SETORES')
+	setor = forms.ModelChoiceField(label='Setor', queryset=VSetor.objects.filter(set_ativo=True).order_by('set_nome'), required=True, empty_label='TODOS OS SETORES')
 	pessoa = forms.ModelChoiceField(label='Pessoa', queryset=VPessoa.objects.all().order_by('pes_nome'), required=False, empty_label='GERAL')
 
 	def __init__(self, *args, **kwargs):
@@ -49,7 +49,7 @@ class RamalForm(forms.ModelForm):
 		model = Ramal
 		fields = ['setor', 'pessoa', 'numero']
 
-	setor = forms.ModelChoiceField(label='Setor', queryset=VSetor.objects.all().order_by('set_nome'), required=True, empty_label='TODOS OS SETORES')
+	setor = forms.ModelChoiceField(label='Setor', queryset=VSetor.objects.filter(set_ativo=True).order_by('set_nome'), required=True, empty_label='TODOS OS SETORES')
 	pessoa = forms.ModelChoiceField(label='Pessoa', queryset=VPessoa.objects.all().order_by('pes_nome'), required=False, empty_label='GERAL')
 
 	def __init__(self, *args, **kwargs):

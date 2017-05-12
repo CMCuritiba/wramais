@@ -18,7 +18,7 @@ class VSetor(models.Model):
 	set_nome = models.CharField(max_length=500)
 	set_sigla = models.CharField(max_length=100)
 	set_id_superior = models.IntegerField(blank=True, null=True)
-	set_ativo = models.IntegerField()
+	set_ativo = models.BooleanField()
 	set_tipo = models.CharField(max_length=1)
 
 	def __unicode__(self):
@@ -52,8 +52,9 @@ class VPessoa(models.Model):
 #---------------------------------------------------------------------------------------------
 @python_2_unicode_compatible
 class Ramal(models.Model):	
-	setor = models.ForeignKey(VSetor, to_field='set_id')
-	pessoa = models.ForeignKey(VPessoa, to_field='pes_matricula', null=True)
+
+	setor = models.ForeignKey(VSetor, to_field='set_id', db_constraint=False)
+	pessoa = models.ForeignKey(VPessoa, to_field='pes_matricula', null=True, db_constraint=False)
 	numero = models.CharField(max_length=200)
 
 	def __unicode__(self):
