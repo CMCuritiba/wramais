@@ -14,6 +14,10 @@ from __future__ import absolute_import, unicode_literals
 
 from boto.s3.connection import OrdinaryCallingFormat
 from django.utils import six
+from __future__ import absolute_import, unicode_literals
+from decouple import config
+from unipath import Path
+from dj_database_url import parse as db_url
 
 import logging
 
@@ -24,7 +28,7 @@ from .base import *  # noqa
 # ------------------------------------------------------------------------------
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
 # Raises ImproperlyConfigured exception if DJANGO_SECRET_KEY not in os.environ
-SECRET_KEY = env('DJANGO_SECRET_KEY')
+SECRET_KEY = config('SECRET_KEY_PROD', default='')
 
 
 # This ensures that Django will be able to detect a secure connection
@@ -142,7 +146,23 @@ TEMPLATES[0]['OPTIONS']['loaders'] = [
 
 # Use the Heroku-style specification
 # Raises ImproperlyConfigured exception if DATABASE_URL not in os.environ
-DATABASES['default'] = env.db('DATABASE_URL')
+#DATABASES['default'] = env.db('DATABASE_URL')
+DATABASES = {
+    'ldap': {
+        'ENGINE': 'ldapdb.backends.ldap',
+        #'NAME': 'ldap://ldap',
+        'NAME': config('LDAP_AUTH_URL'),
+        #'USER': 'ou=Usuarios,dc=cmc,dc=pr,dc=gov,dc=br',
+        #'PASSWORD': '',
+        #'USER': 'uid=alexandre.odoni,ou=Usuarios,dc=cmc,dc=pr,dc=gov,dc=br',
+        #'PASSWORD': '',
+        #'TLS': True,
+        #'CONNECTION_OPTIONS': {
+        #    ldap.OPT_X_TLS_DEMAND: True,
+        #}
+     },
+    'default': config('DATABASE_PROD_URL', cast=db_url),
+}
 
 # CACHING
 # ------------------------------------------------------------------------------

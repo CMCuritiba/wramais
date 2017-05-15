@@ -18,7 +18,7 @@ TEMPLATES[0]['OPTIONS']['debug'] = False
 # ------------------------------------------------------------------------------
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
 # Note: This key only used for development and testing.
-SECRET_KEY = env('DJANGO_SECRET_KEY', default='CHANGEME!!!')
+SECRET_KEY = config('SECRET_KEY_LOCAL', default='')
 
 # Mail settings
 # ------------------------------------------------------------------------------
@@ -63,8 +63,8 @@ TEMPLATES[0]['OPTIONS']['loaders'] = [
 
 # LDAP
 # ------------------------------------------------------------------------------
-LDAP_AUTH_URL = "ldap://ldap-desenv"
-LDAP_AUTH_SEARCH_BASE = "ou=Usuarios,dc=cmc,dc=pr,dc=gov,dc=br"
+LDAP_AUTH_URL = config('LDAP_AUTH_URL', default='')
+LDAP_AUTH_SEARCH_BASE = config('LDAP_AUTH_SEARCH_BASE', default='')
 
 # DATABASE CONFIGURATION
 # ------------------------------------------------------------------------------
@@ -72,16 +72,8 @@ LDAP_AUTH_SEARCH_BASE = "ou=Usuarios,dc=cmc,dc=pr,dc=gov,dc=br"
 DATABASES = {
     'ldap': {
         'ENGINE': 'ldapdb.backends.ldap',
-        'NAME': 'ldap://ldap-desenv',
-        #'USER': 'ou=Usuarios,dc=cmc,dc=pr,dc=gov,dc=br',
-        #'PASSWORD': '',
-        #'USER': 'uid=alexandre.odoni,ou=Usuarios,dc=cmc,dc=pr,dc=gov,dc=br',
-        #'PASSWORD': '',
-        #'TLS': True,
-        #'CONNECTION_OPTIONS': {
-        #    ldap.OPT_X_TLS_DEMAND: True,
-        #}
+        'NAME': config('LDAP_AUTH_URL'),
      },
-    'default': env.db('DATABASE_URL', default='postgres:///ramais-test'),
+    'default': config('DATABASE_TEST_URL', cast=db_url),
 }
 DATABASES['default']['ATOMIC_REQUESTS'] = True

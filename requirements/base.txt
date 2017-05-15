@@ -49,3 +49,12 @@ django-bower==5.2.0
 # Django Easy PDF
 django-easy-pdf
 WeasyPrint
+
+# Django database url
+dj-database-url==0.4.2
+
+# Django Unipath
+Unipath==1.1
+
+# Python Decouple
+python-decouple==3.0

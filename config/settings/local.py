@@ -9,21 +9,24 @@ Local settings
 - Add Django Debug Toolbar
 - Add django-extensions as app
 """
-
+from __future__ import absolute_import, unicode_literals
 import socket
 import os
 from .base import *  # noqa
+from decouple import config
+from unipath import Path
+from dj_database_url import parse as db_url
 
 # DEBUG
 # ------------------------------------------------------------------------------
-DEBUG = env.bool('DJANGO_DEBUG', default=True)
+DEBUG = config('DEBUG', default=True, cast=bool)
 TEMPLATES[0]['OPTIONS']['debug'] = DEBUG
 
 # SECRET CONFIGURATION
 # ------------------------------------------------------------------------------
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
 # Note: This key only used for development and testing.
-SECRET_KEY = env('DJANGO_SECRET_KEY', default='<+DK-t}tT0`F/tn<.#2f4EYv+1}/Nnp(h>[[M1IXaO>_$2#SoL')
+SECRET_KEY = config('SECRET_KEY_LOCAL', default='')
 
 # Mail settings
 # ------------------------------------------------------------------------------

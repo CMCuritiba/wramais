@@ -9,6 +9,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/dev/ref/settings/
 """
 from __future__ import absolute_import, unicode_literals
+from decouple import config
+from unipath import Path
+from dj_database_url import parse as db_url
 
 import environ, os
 
@@ -84,7 +87,8 @@ MIDDLEWARE = [
 # DEBUG
 # ------------------------------------------------------------------------------
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#debug
-DEBUG = env.bool('DJANGO_DEBUG', False)
+#DEBUG = env.bool('DJANGO_DEBUG', False)
+DEBUG = config('DEBUG', default=True, cast=bool)
 
 # FIXTURE CONFIGURATION
 # ------------------------------------------------------------------------------
@@ -114,7 +118,7 @@ DATABASES = {
     'ldap': {
         'ENGINE': 'ldapdb.backends.ldap',
         #'NAME': 'ldap://ldap',
-        'NAME': 'ldap://ldap-desenv',
+        'NAME': config('LDAP_AUTH_URL'),
         #'USER': 'ou=Usuarios,dc=cmc,dc=pr,dc=gov,dc=br',
         #'PASSWORD': '',
         #'USER': 'uid=alexandre.odoni,ou=Usuarios,dc=cmc,dc=pr,dc=gov,dc=br',
@@ -124,7 +128,7 @@ DATABASES = {
         #    ldap.OPT_X_TLS_DEMAND: True,
         #}
      },
-    'default': env.db('DATABASE_URL', default='postgres:///ramais'),
+    'default': config('DATABASE_URL', default='postgres:///ramais', cast=db_url),
 }
 DATABASES['default']['ATOMIC_REQUESTS'] = True
 
@@ -273,19 +277,18 @@ ADMIN_URL = r'^admin/'
 # LDAP
 # ------------------------------------------------------------------------------
 #LDAP_AUTH_URL = "ldap://ldap"
-LDAP_AUTH_URL = "ldap://ldap-desenv"
-LDAP_AUTH_USE_TLS = False
-#LDAP_AUTH_SEARCH_BASE = "ou=Usuarios,dc=pr,dc=gov,dc=br"
-LDAP_AUTH_SEARCH_BASE = "ou=Usuarios,dc=cmc,dc=pr,dc=gov,dc=br"
-LDAP_AUTH_OBJECT_CLASS = "inetOrgPerson"
+LDAP_AUTH_URL = config('LDAP_AUTH_URL', default='')
+LDAP_AUTH_USE_TLS = config('LDAP_AUTH_USE_TLS', default=False, cast=bool)
+LDAP_AUTH_SEARCH_BASE = config('LDAP_AUTH_SEARCH_BASE', default='')
+LDAP_AUTH_OBJECT_CLASS = config('LDAP_AUTH_OBJECT_CLASS', default='')
 LDAP_AUTH_USER_FIELDS = {
-    "username": "uid",
-    "first_name": "givenName",
-    "last_name": "sn",
-    "email": "mail",
-    "matricula": "employeeNumber",
-    "lotado": "departmentNumber",
-    "chefia": "employeeType",
+    "username": config('LDAP_AUTH_USER_FIELDS_USERNAME', default=''),
+    "first_name": config('LDAP_AUTH_USER_FIELDS_FIRST_NAME', default=''),
+    "last_name": config('LDAP_AUTH_USER_FIELDS_LAST_NAME', default=''),
+    "email": config('LDAP_AUTH_USER_FIELDS_EMAIL', default=''),
+    "matricula": config('LDAP_AUTH_USER_FIELDS_MATRICULA', default=''),
+    "lotado": config('LDAP_AUTH_USER_FIELDS_LOTADO', default=''),
+    "chefia": config('LDAP_AUTH_USER_FIELDS_CHEFIA', default=''),
 }
 LDAP_AUTH_USER_LOOKUP_FIELDS = ("username",)
 LDAP_AUTH_CLEAN_USER_DATA = "django_python3_ldap.utils.clean_user_data"

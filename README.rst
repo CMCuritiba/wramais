@@ -8,6 +8,10 @@ Aplicação Django para controle de ramais Câmara Municipal de Curitiba
 .. section-numbering::
 
 
+ATENÇÃO
+=======
+Esta versão já possui variáveis de ambiente configuradas para o Decouple.
+Por motivos de segurança, o arquivo .env com estas variáveis não está versionado, portanto favor requisitar o mesmo com os responsáveis.
 
 Comandos Django úteis
 =====================
