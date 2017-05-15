@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
+{% load relatoriotags %}
 
 {% block title %}Ramais{% endblock %}
 
@@ -35,7 +36,7 @@
 				<tr>
 					<td><a href="altera/{{ item.id }}">{{ item.setor.set_nome }}</a></td>
 					<td><a href="altera/{{ item.id }}">{{ item.numero }}</a></td>
-					<td><a href="altera/{{ item.id }}">{{ item.pessoa.pes_nome }}</a></td>
+					<td><a href="altera/{{ item.id }}">{{ item.pessoa.pes_nome|formata_pessoa|retira_fg }}</a></td>
 					<td class="text-center"><a href="javascript:exclui({{ item.id }})"><span class="glyphicon glyphicon-trash text-danger"></span></a></td>
 				</tr>
 			{% endfor %}

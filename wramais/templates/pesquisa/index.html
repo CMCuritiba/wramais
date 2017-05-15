@@ -1,5 +1,6 @@
 {% extends "base_anonimo.html" %}
 {% load crispy_forms_tags %}
+{% load relatoriotags %}
 
 {% block title %}Ramais{% endblock %}
 
@@ -29,7 +30,7 @@
 				<tr>
 					<td>{{ item.setor.set_nome }}</td>
 					<td>{{ item.numero }}</td>
-					<td>{{ item.pessoa.pes_nome }}</td>
+					<td>{{ item.pessoa.pes_nome|formata_pessoa|retira_fg }}</td>
 				</tr>
 			{% endfor %}
 		</tbody>
