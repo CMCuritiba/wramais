@@ -13,6 +13,7 @@ urlpatterns = [
     url(r'^cadastro/', include('wramais.cadastro.urls', namespace='cadastro')),
     url(r'^autentica/', include('wramais.autentica.urls', namespace='autentica')),
     url(r'^relatorios/', include('wramais.relatorios.urls', namespace='relatorios')),
+    url(r'^pesquisa/', include('wramais.pesquisa.urls', namespace='pesquisa')),
     url(r'^$', TemplateView.as_view(template_name='pages/home.html'), name='home'),
     url(r'^about/$', TemplateView.as_view(template_name='pages/about.html'), name='about'),
 

@@ -62,6 +62,7 @@ LOCAL_APPS = [
     'wramais.autentica.apps.AutenticaConfig',
     'wramais.cadastro.apps.CadastroConfig',
     'wramais.relatorios.apps.RelatoriosConfig',
+    'wramais.pesquisa.apps.PesquisaConfig',
 ]
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
