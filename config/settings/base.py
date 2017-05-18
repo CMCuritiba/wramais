@@ -117,16 +117,8 @@ MANAGERS = ADMINS
 DATABASES = {
     'ldap': {
         'ENGINE': 'ldapdb.backends.ldap',
-        #'NAME': 'ldap://ldap',
         'NAME': config('LDAP_AUTH_URL'),
-        #'USER': 'ou=Usuarios,dc=cmc,dc=pr,dc=gov,dc=br',
-        #'PASSWORD': '',
-        #'USER': 'uid=alexandre.odoni,ou=Usuarios,dc=cmc,dc=pr,dc=gov,dc=br',
-        #'PASSWORD': '',
-        #'TLS': True,
-        #'CONNECTION_OPTIONS': {
-        #    ldap.OPT_X_TLS_DEMAND: True,
-        #}
+
      },
     'default': config('DATABASE_URL', default='postgres:///ramais', cast=db_url),
 }

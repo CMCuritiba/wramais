@@ -32,4 +32,11 @@ Gerar e comprimir arquivos css e js
     $ python manage.py collectstatic
 
 
+Pacotes a instalar no servidor (deploy)
+=======================================
+
+For pip/virtualenv python-pip , python-virtualenv
+For PostgreSQL postgresql , postgresql-contrib , libpq-dev , python-dev    
+
+
 :License: MIT
