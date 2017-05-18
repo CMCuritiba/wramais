@@ -7,7 +7,7 @@ from __future__ import absolute_import, unicode_literals
 
 from decouple import config
 from unipath import Path
-from dj_database_url import parse as db_url
+import dj_database_url
 
 import logging
 
@@ -129,7 +129,14 @@ DATABASES = {
         'ENGINE': 'ldapdb.backends.ldap',
         'NAME': config('LDAP_AUTH_URL'),
      },
-    'default': config('DATABASE_PROD_URL', cast=db_url),
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': config('DATABASE_PROD_NAME'),
+        'USER': config('DATABASE_PROD_USER'),
+        'PASSWORD': config('DATABASE_PROD_PASSWORD'),
+        'HOST': config('DATABASE_PROD_HOST'),
+        'PORT': config('DATABASE_PROD_PORT'),
+    }
 }
 
 # CACHING
@@ -195,7 +202,7 @@ LOGGING = {
 #        },
         'django.security.DisallowedHost': {
             'level': 'ERROR',
-            'handlers': ['console', 'sentry', ],
+            'handlers': ['console', ],
             'propagate': False,
         },
     },
@@ -211,3 +218,7 @@ LOGGING = {
 
 # Your production stuff: Below this line define 3rd party library settings
 # ------------------------------------------------------------------------------
+
+# Atualizando conexao BD para usar pool
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES['default'].updatedb(db_from_env)
