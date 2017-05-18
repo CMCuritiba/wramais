@@ -97,14 +97,13 @@ def install_production():
 def bootstrap():
 	# Atualiza código para o servidor de aplicação
 
-	# Este comando instala todos os pacotes necessários no servidor
-	
-	#sudo('apt-get update && apt-get install git supervisor nginx memcached libjpeg8-dev postgresql libpq-dev python-dev python-pip python-virtualenv libfreetype6-dev libncurses5-dev libxml2-dev libxslt1-dev zlib1g-dev')
+	# git, nginx, supervisor e memcached
 	sudo('apt-get update')
 	sudo('apt-get install git')
 	sudo('apt-get install supervisor')
 	sudo('apt-get install nginx')
 	sudo('apt-get install memcached')
+	# bibliotecas diversas usadas pelo projeto (ldap, xmlm, ssl, etc) 
 	sudo('apt-get install libpq-dev')
 	sudo('apt-get install python-dev')
 	sudo('apt-get install python3.5-dev')
@@ -137,7 +136,7 @@ def bootstrap():
 			run(env.activate)
 
 			# Instala todos os pacotes no servidor 
-			sudo('pip install -r requirements.txt')
+			sudo('pip install -r requirements/production.txt')
 
 	# Acerta o usuário/grupo
 	chown()
