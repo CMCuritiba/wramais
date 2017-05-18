@@ -13,20 +13,20 @@ from __future__ import absolute_import, unicode_literals
 import socket
 import os
 from .base import *  # noqa
-from decouple import config
 from unipath import Path
 from dj_database_url import parse as db_url
+import environ, os
 
 # DEBUG
 # ------------------------------------------------------------------------------
-DEBUG = config('DEBUG', default=True, cast=bool)
+DEBUG = env('DEBUG', default=True)
 TEMPLATES[0]['OPTIONS']['debug'] = DEBUG
 
 # SECRET CONFIGURATION
 # ------------------------------------------------------------------------------
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
 # Note: This key only used for development and testing.
-SECRET_KEY = config('SECRET_KEY_LOCAL', default='')
+SECRET_KEY = env('SECRET_KEY_LOCAL', default='')
 
 # Mail settings
 # ------------------------------------------------------------------------------

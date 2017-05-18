@@ -5,17 +5,19 @@ Production Configurations
 """
 from __future__ import absolute_import, unicode_literals
 
-from decouple import config
 from unipath import Path
 import dj_database_url
 
 import logging
+import environ, os
+
+from .base import *  # noqa
 
 # SECRET CONFIGURATION
 # ------------------------------------------------------------------------------
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
 # Raises ImproperlyConfigured exception if DJANGO_SECRET_KEY not in os.environ
-SECRET_KEY = config('SECRET_KEY_PROD', default='')
+SECRET_KEY = env('SECRET_KEY_PROD', default='')
 
 
 # SECURITY CONFIGURATION
@@ -41,7 +43,7 @@ SECRET_KEY = config('SECRET_KEY_PROD', default='')
 # ------------------------------------------------------------------------------
 # Hosts/domain names that are valid for this site
 # See https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default=['example.com', ])
+ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default=['*', ])
 # END SITE CONFIGURATION
 
 INSTALLED_APPS += ['gunicorn', ]
@@ -127,15 +129,15 @@ TEMPLATES[0]['OPTIONS']['loaders'] = [
 DATABASES = {
     'ldap': {
         'ENGINE': 'ldapdb.backends.ldap',
-        'NAME': config('LDAP_AUTH_URL'),
+        'NAME': env('LDAP_AUTH_URL'),
      },
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': config('DATABASE_PROD_NAME'),
-        'USER': config('DATABASE_PROD_USER'),
-        'PASSWORD': config('DATABASE_PROD_PASSWORD'),
-        'HOST': config('DATABASE_PROD_HOST'),
-        'PORT': config('DATABASE_PROD_PORT'),
+        'NAME': env('DATABASE_PROD_NAME'),
+        'USER': env('DATABASE_PROD_USER'),
+        'PASSWORD': env('DATABASE_PROD_PASSWORD'),
+        'HOST': env('DATABASE_PROD_HOST'),
+        'PORT': env('DATABASE_PROD_PORT'),
     }
 }
 
@@ -221,4 +223,4 @@ LOGGING = {
 
 # Atualizando conexao BD para usar pool
 db_from_env = dj_database_url.config(conn_max_age=500)
-DATABASES['default'].updatedb(db_from_env)
+DATABASES['default'].update(db_from_env)
