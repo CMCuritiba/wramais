@@ -220,7 +220,3 @@ LOGGING = {
 
 # Your production stuff: Below this line define 3rd party library settings
 # ------------------------------------------------------------------------------
-
-# Atualizando conexao BD para usar pool
-db_from_env = dj_database_url.config(conn_max_age=500)
-DATABASES['default'].update(db_from_env)

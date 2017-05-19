@@ -37,7 +37,9 @@ def production():
 	env.virtualenv = ''
 	env.activate = ''
 
+# ---------------------------------------------------------------------------------------------------------------
 # NÃO MUDE NADA ABAIXO !!!!!!!
+# ---------------------------------------------------------------------------------------------------------------
 
 def clean():
 	''' Limpa Python bytecode '''
@@ -118,6 +120,11 @@ def bootstrap():
 	sudo('apt-get install libsasl2-dev')
 	sudo('apt-get install libldap2-dev')
 	sudo('apt-get install libssl-dev')
+	sudo('apt-get install curl')
+	# baixar o node e instalar
+	sudo('curl -sL https://deb.nodesource.com/setup_6.x | bash -')
+	sudo('apt-get install -y nodejs')
+	sudo('npm install -g bower')
 
 	# Cria os diretórios e permissões necessários 
 	cria_webapps()	
@@ -137,6 +144,12 @@ def bootstrap():
 
 			# Instala todos os pacotes no servidor 
 			sudo('pip install -r requirements/production.txt')
+
+			# Roda o bower install
+			run('./manage.py bower_install --settings=config.settings.production')
+
+			# Gera todos os arquivos css/js
+			run('./manage.py collectstatic --noinput --settings=config.settings.production')
 
 	# Acerta o usuário/grupo
 	chown()
