@@ -7,6 +7,7 @@ import os
 
 PROJECT_NAME = 'wramais'
 WEBAPPS = '/usr/share/webapps'
+ENVS = '/usr/share/envs'
 PROJECT_ROOT = WEBAPPS + '/%s' % PROJECT_NAME
 REPO = 'git@gitlab.cmc.pr.gov.br:desenv/wramais.git'
 
@@ -21,9 +22,9 @@ def localhost():
 
 @task
 def staging():
-	env.hosts = ['192.168.56.101']
+	env.hosts = ['192.168.56.103']
 	env.environment = 'staging'	
-	env.user = 'django'
+	env.user = 'zaca'
 	env.virtualenv = '/usr/share/envs/wramais'
 	env.activate = 'source /usr/share/envs/wramais/bin/activate'
 	env.wwwdata = 'www-data'
@@ -47,11 +48,15 @@ def clean():
 
 def chown():
 	''' Seta permissões ao usuário/grupo corretos '''
-	sudo('chown -R {}:{} {}'.format(env.wwwdata, env.wwwdata, PROJECT_ROOT))
+	sudo('chown -R {}:{} {}'.format(env.user, env.wwwdata, PROJECT_ROOT))
 
 def cria_webapps():
 	sudo('mkdir -p {}'.format(WEBAPPS))
 	sudo('chown -R {}:{} {}'.format(env.user, env.wwwdata, WEBAPPS))
+
+def cria_envs():
+	sudo('mkdir -p {}'.format(ENVS))
+	sudo('chown -R {}:{} {}'.format(env.user, env.wwwdata, ENVS))
 
 def restart():
 	sudo('supervisorctl reread')
@@ -77,7 +82,7 @@ def testa_local():
 def verifica():
 	with cd(PROJECT_ROOT):	
 		with source_virtualenv():
-			run('./manage.py check')
+			run('./manage.py check --settings=config.settings.production')
 
 @task
 def pull_master():
@@ -128,6 +133,7 @@ def bootstrap():
 
 	# Cria os diretórios e permissões necessários 
 	cria_webapps()	
+	cria_envs()
 	run('mkdir -p {}'.format(PROJECT_ROOT))
 	run('git clone {} {}'.format(REPO, PROJECT_ROOT))
 
@@ -145,11 +151,30 @@ def bootstrap():
 			# Instala todos os pacotes no servidor 
 			sudo('pip install -r requirements/production.txt')
 
+	# Acerta o usuário/grupo
+	chown()
+
+@task
+def manage_bower():
+	with cd(PROJECT_ROOT):
+		with source_virtualenv():
 			# Roda o bower install
 			run('./manage.py bower_install --settings=config.settings.production')
 
+@task
+def manage_collectstatic():
+	with cd(PROJECT_ROOT):
+		with source_virtualenv():
 			# Gera todos os arquivos css/js
 			run('./manage.py collectstatic --noinput --settings=config.settings.production')
 
-	# Acerta o usuário/grupo
-	chown()
+@task
+def git_update():
+	with cd(PROJECT_ROOT):
+		# Atualiza servidor com última versão do master
+		run('git pull origin master')
+
+@task 
+def cria_links():
+	sudo('ln -sf {}/deploy/staging/supervisor.conf /etc/supervisor/conf.d/wramais.conf'.format(PROJECT_ROOT))
+	sudo('ln -sf {}/deploy/staging/nginx.conf /etc/nginx/sites-enabled/wramais'.format(PROJECT_ROOT))
