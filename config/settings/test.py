@@ -6,6 +6,7 @@ Test settings
 '''
 
 from .base import *  # noqa
+import environ, os
 
 
 # DEBUG
@@ -18,7 +19,7 @@ TEMPLATES[0]['OPTIONS']['debug'] = False
 # ------------------------------------------------------------------------------
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
 # Note: This key only used for development and testing.
-SECRET_KEY = config('SECRET_KEY_LOCAL', default='')
+SECRET_KEY = env('SECRET_KEY_LOCAL', default='')
 
 # Mail settings
 # ------------------------------------------------------------------------------
@@ -63,8 +64,8 @@ TEMPLATES[0]['OPTIONS']['loaders'] = [
 
 # LDAP
 # ------------------------------------------------------------------------------
-LDAP_AUTH_URL = config('LDAP_AUTH_URL', default='')
-LDAP_AUTH_SEARCH_BASE = config('LDAP_AUTH_SEARCH_BASE', default='')
+LDAP_AUTH_URL = env('LDAP_AUTH_URL', default='')
+LDAP_AUTH_SEARCH_BASE = env('LDAP_AUTH_SEARCH_BASE', default='')
 
 # DATABASE CONFIGURATION
 # ------------------------------------------------------------------------------
@@ -72,8 +73,11 @@ LDAP_AUTH_SEARCH_BASE = config('LDAP_AUTH_SEARCH_BASE', default='')
 DATABASES = {
     'ldap': {
         'ENGINE': 'ldapdb.backends.ldap',
-        'NAME': config('LDAP_AUTH_URL'),
+        'NAME': env('LDAP_AUTH_URL'),
      },
-    'default': config('DATABASE_TEST_URL', cast=db_url),
+    'default': env.db_url('DATABASE_TEST_URL'),
 }
 DATABASES['default']['ATOMIC_REQUESTS'] = True
+
+
+
