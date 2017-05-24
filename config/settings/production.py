@@ -145,6 +145,14 @@ DATABASES = {
 
 # CACHING
 # ------------------------------------------------------------------------------
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': '127.0.0.1:11211',
+        'TIMEOUT': 60,
+        'KEY_PREFIX': 'djcache',
+    }
+}
 
 #REDIS_LOCATION = '{0}/{1}'.format(env('REDIS_URL', default='redis://127.0.0.1:6379'), 0)
 # Heroku URL does not pass the DB number, so we parse it in

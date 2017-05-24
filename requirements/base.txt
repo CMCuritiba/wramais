@@ -12,6 +12,7 @@ django-environ==0.4.1
 
 # Compressor
 django-compressor==2.1.1
+django-appconf
 
 # Forms
 django-braces==1.11.0

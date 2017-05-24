@@ -7,6 +7,7 @@ import os
 
 PROJECT_NAME = 'wramais'
 WEBAPPS = '/usr/share/webapps'
+HTML = '/var/www/html'
 ENVS = '/usr/share/envs'
 PROJECT_ROOT = WEBAPPS + '/%s' % PROJECT_NAME
 REPO = 'git@gitlab.cmc.pr.gov.br:desenv/wramais.git'
@@ -22,13 +23,13 @@ def localhost():
 
 @task
 def staging():
-	env.hosts = ['192.168.56.103']
+	env.hosts = ['192.168.57.103']
 	env.environment = 'staging'	
-	env.user = 'zaca'
+	env.user = 'staging'
 	env.virtualenv = '/usr/share/envs/wramais'
 	env.activate = 'source /usr/share/envs/wramais/bin/activate'
 	env.wwwdata = 'www-data'
-	env.python_location = '/usr/bin/python3.5'
+	env.python_location = '/usr/bin/python3.4'
 
 @task
 def production():
@@ -57,6 +58,13 @@ def cria_webapps():
 def cria_envs():
 	sudo('mkdir -p {}'.format(ENVS))
 	sudo('chown -R {}:{} {}'.format(env.user, env.wwwdata, ENVS))
+
+def cria_html():
+	sudo('mkdir -p {}'.format(HTML + '/' + PROJECT_NAME))
+	sudo('mkdir -p {}'.format(HTML + '/' + PROJECT_NAME + '/logs'))
+	sudo('chown -R {}:{} {}'.format(env.user, env.wwwdata, WEBAPPS))	
+	sudo('chown -R {}:{} {}'.format(env.user, env.wwwdata, HTML + '/' + PROJECT_NAME))	
+
 
 def restart():
 	sudo('supervisorctl reread')
@@ -97,7 +105,7 @@ def install_production():
 			run(env.activate)
 
 			''' Instala todos os pacotes no servidor '''
-			sudo('pip install -r requirements/production.txt')		
+			sudo('pip install -r requirements/production.txt')	
 
 
 @task
@@ -113,7 +121,8 @@ def bootstrap():
 	# bibliotecas diversas usadas pelo projeto (ldap, xmlm, ssl, etc) 
 	sudo('apt-get install libpq-dev')
 	sudo('apt-get install python-dev')
-	sudo('apt-get install python3.5-dev')
+	#sudo('apt-get install python3.5-dev')
+	sudo('apt-get install python3.4-dev')
 	sudo('apt-get install python-pip')
 	sudo('apt-get install python-virtualenv')
 	sudo('apt-get install libfreetype6-dev')
@@ -125,6 +134,11 @@ def bootstrap():
 	sudo('apt-get install libsasl2-dev')
 	sudo('apt-get install libldap2-dev')
 	sudo('apt-get install libssl-dev')
+	# Para python 3.4 necessário bibliotecas abaixo:
+	sudo('apt-get install libpcap0.8-dev')
+	sudo('apt-get install python3-setuptools')
+	sudo('apt-get install libjpeg62-turbo-dev')
+
 	sudo('apt-get install curl')
 	# baixar o node e instalar
 	sudo('curl -sL https://deb.nodesource.com/setup_6.x | bash -')
@@ -134,9 +148,10 @@ def bootstrap():
 	# Cria os diretórios e permissões necessários 
 	cria_webapps()	
 	cria_envs()
+	cria_html()
 	run('mkdir -p {}'.format(PROJECT_ROOT))
 	run('git clone {} {}'.format(REPO, PROJECT_ROOT))
-
+	
 	with cd(PROJECT_ROOT):
 		# Atualiza servidor com última versão do master
 		run('git pull origin master')
@@ -178,3 +193,10 @@ def git_update():
 def cria_links():
 	sudo('ln -sf {}/deploy/staging/supervisor.conf /etc/supervisor/conf.d/wramais.conf'.format(PROJECT_ROOT))
 	sudo('ln -sf {}/deploy/staging/nginx.conf /etc/nginx/sites-enabled/wramais'.format(PROJECT_ROOT))
+	sudo('chmod a+x {}/deploy/staging/run.sh'.format(PROJECT_ROOT))
+
+@task
+def restart_nginx_supervisor():
+	sudo('supervisorctl reload')
+	sudo('supervisorctl restart {}'.format(PROJECT_NAME))
+	sudo('service nginx restart')
