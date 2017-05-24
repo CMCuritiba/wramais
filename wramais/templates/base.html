@@ -38,7 +38,7 @@
                             </ul>
                         </li>
                         
-                        <li><a href="/core/usuario/sair/">Sair</a></li>
+                        <li><a href="/autentica/sair/">Sair</a></li>
                     </ul>
                 </div>
                 </div>
@@ -46,6 +46,7 @@
 
             <div class="bs-callout bs-callout-default">
                 <h4>{% block title %}CMC WRamais{% endblock %}</h4>
+                {% block userdetail %}{% endblock %}
             </div>
 
             {% for message in messages %}

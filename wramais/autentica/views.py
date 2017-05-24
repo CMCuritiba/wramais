@@ -38,3 +38,7 @@ def valida_usuario(request):
 		else:
 			messages.add_message(request, messages.ERROR, "Usuário ou senha incorretos.")
 			return redirect('/autentica/loga/?next=' + next) 
+
+def sair(request):
+	logout(request)
+	return HttpResponseRedirect('/autentica/loga/?next=/')			

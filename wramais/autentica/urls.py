@@ -7,6 +7,7 @@ from . import views
 
 urlpatterns = [
 	url(r'^loga/$', views.loga, name='loga'),
+	url(r'^sair/$', views.sair, name='sair'),
 	url(r'^valida-usuario/$', views.valida_usuario, name='valida-usuario'),
 ]
 
