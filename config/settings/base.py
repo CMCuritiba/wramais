@@ -19,7 +19,7 @@ APPS_DIR = ROOT_DIR.path('wramais')
 
 # Load operating system environment variables and then prepare to use them
 env = environ.Env()
-env.read_env()
+env.read_env(env_file=ROOT_DIR('.env'))
 
 # .env file, should load only in development environment
 READ_DOT_ENV_FILE = env.bool('DJANGO_READ_DOT_ENV_FILE', default=False)

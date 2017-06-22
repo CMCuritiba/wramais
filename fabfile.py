@@ -10,7 +10,7 @@ WEBAPPS = '/usr/share/webapps'
 HTML = '/var/www/html'
 ENVS = '/usr/share/envs'
 PROJECT_ROOT = WEBAPPS + '/%s' % PROJECT_NAME
-REPO = 'https://gitlab.cmc.pr.gov.br/desenv/wramais.git'
+REPO = 'https://github.com/CMCuritiba/wramais.git'
 #REPO = 'alexandre.odoni@gitlab.cmc.pr.gov.br:desenv/wramais.git'
 USERAPP = 'cmc-apps'
 
@@ -25,11 +25,9 @@ def localhost():
 
 @task
 def staging():
-	#env.hosts = ['staging.cmc.pr.gov.br']
-	env.hosts = ['192.168.56.102']
+	env.hosts = ['staging.cmc.pr.gov.br']
 	env.environment = 'staging'	
-	#env.user = 'suporte'
-	env.user = 'koala'
+	env.user = 'suporte'
 	env.virtualenv = '/usr/share/envs/wramais'
 	env.activate = 'source /usr/share/envs/wramais/bin/activate'
 	env.wwwdata = 'www-data'
@@ -60,19 +58,21 @@ def clean():
 def chown():
 	''' Seta permissões ao usuário/grupo corretos '''
 	sudo('chown -R {}:{} {}'.format(USERAPP, USERAPP, PROJECT_ROOT))
+	sudo('chown -R {}:{} {}'.format(USERAPP, USERAPP, ENVS))
+	sudo('chown -R {}:{} {}'.format(USERAPP, env.wwwdata, HTML + '/' + PROJECT_NAME))	
 
 def cria_webapps():
 	sudo('mkdir -p {}'.format(WEBAPPS))
-	sudo('mkdir -p {}'.format(PROJECT_ROOT))
-	sudo('chown -R {}:{} {}'.format(USERAPP, USERAPP, WEBAPPS))
+	sudo('mkdir -p {}'.format(PROJECT_ROOT), user=USERAPP)
+	#sudo('chown -R {}:{} {}'.format(USERAPP, USERAPP, WEBAPPS))
 
 def cria_envs():
 	sudo('mkdir -p {}'.format(ENVS))
-	sudo('chown -R {}:{} {}'.format(USERAPP, USERAPP, ENVS))
+	#sudo('chown -R {}:{} {}'.format(USERAPP, USERAPP, ENVS))
 
 def cria_html():
-	sudo('mkdir -p {}'.format(HTML + '/' + PROJECT_NAME), user=env.wwwdata)
-	sudo('mkdir -p {}'.format(HTML + '/' + PROJECT_NAME + '/logs'), user=env.wwwdata)
+	sudo('mkdir -p {}'.format(HTML + '/' + PROJECT_NAME))
+	sudo('mkdir -p {}'.format(HTML + '/' + PROJECT_NAME + '/logs'))
 	#sudo('chown -R {}:{} {}'.format(USERAPP, env.wwwdata, HTML + '/' + PROJECT_NAME))	
 
 def restart():
