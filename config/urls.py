@@ -7,6 +7,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.views.generic import TemplateView
 from django.views import defaults as default_views
+from wramais.pesquisa.views import PesquisaRamaisView
 
 urlpatterns = [
     # Your stuff: custom urls includes go here
@@ -14,8 +15,7 @@ urlpatterns = [
     url(r'^autentica/', include('wramais.autentica.urls', namespace='autentica')),
     url(r'^relatorios/', include('wramais.relatorios.urls', namespace='relatorios')),
     url(r'^pesquisa/', include('wramais.pesquisa.urls', namespace='pesquisa')),
-    url(r'^$', TemplateView.as_view(template_name='pages/home.html'), name='home'),
-    url(r'^about/$', TemplateView.as_view(template_name='pages/about.html'), name='about'),
+    url(r'^$', PesquisaRamaisView.as_view(template_name='pesquisa/index.html'), name='index'),
 
     # Django Admin, use {% url 'admin:index' %}
     url(settings.ADMIN_URL, admin.site.urls),
