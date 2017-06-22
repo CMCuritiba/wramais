@@ -61,6 +61,12 @@ def chown():
 	sudo('chown -R {}:{} {}'.format(USERAPP, USERAPP, ENVS))
 	sudo('chown -R {}:{} {}'.format(USERAPP, env.wwwdata, HTML + '/' + PROJECT_NAME))	
 
+def des_chown():
+	''' Seta permissões ao usuário/grupo corretos '''
+	sudo('chown -R {} {}'.format(env.user, PROJECT_ROOT))
+	sudo('chown -R {} {}'.format(env.user, ENVS))
+	sudo('chown -R {} {}'.format(env.user, HTML + '/' + PROJECT_NAME))	
+
 def cria_webapps():
 	sudo('mkdir -p {}'.format(WEBAPPS))
 	sudo('mkdir -p {}'.format(PROJECT_ROOT), user=USERAPP)
@@ -179,23 +185,25 @@ def bootstrap():
 
 @task
 def manage_bower():
+	des_chown()
 	with cd(PROJECT_ROOT):
 		with source_virtualenv():
 			# Roda o bower install
 			run('./manage.py bower_install --settings=config.settings.production')
+	chown()
 
 @task
 def manage_collectstatic():
 	with cd(PROJECT_ROOT):
 		with source_virtualenv():
 			# Gera todos os arquivos css/js
-			run('./manage.py collectstatic --noinput --settings=config.settings.production')
+			sudo('./manage.py collectstatic --noinput --settings=config.settings.production', user=USERAPP)
 
 @task
 def git_update():
 	with cd(PROJECT_ROOT):
 		# Atualiza servidor com última versão do master
-		run('git pull origin master')
+		sudo('git pull origin master')
 
 @task 
 def cria_links():
