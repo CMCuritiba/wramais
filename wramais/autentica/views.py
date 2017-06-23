@@ -27,13 +27,14 @@ def valida_usuario(request):
 		next = request.POST.get('next')
 		user = authenticate(username=usuario, password=senha)
 		if user is not None:
-			if user.is_active:
+			if user.is_active and user.is_superuser:
 				login(request, user)
-				if next != None and next != 'None':
+				if next != None and next != 'None' and next != '/':
 					return HttpResponseRedirect(next)
-				return render_to_response('index.html', context_instance=RequestContext(request))
+				return redirect('/cadastro')
+				#return render_to_response('index.html', context_instance=RequestContext(request))
 			else:
-				messages.add_message(request, messages.ERROR, "Usuário válido mas desebilitado.")
+				messages.add_message(request, messages.ERROR, "Usuário sem permissões para acessar este módulo.")
 				return redirect('/autentica/loga/?next=' + next)
 		else:
 			messages.add_message(request, messages.ERROR, "Usuário ou senha incorretos.")
