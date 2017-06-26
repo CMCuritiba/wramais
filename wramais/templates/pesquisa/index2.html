@@ -3,30 +3,33 @@
 
 {% block title %}Lista de Ramais{% endblock %}
 {% block content %}
-<style>
-.dataTables_filter {
-   display: none;
-}
-.fonteTable{
-   font-size:12px;
-}
-</style>
-<div class="container">
-    <div class="row">
-        <div class="col-md-10">
-            <label class="texto_titulo_pop">Pesquisa por setor ou pessoa:</label>
-            <input type="search" id="procura" size="40" autofocus>
-        </div>
-        <div class="col-md-2">
-            <a href="/relatorios/hierarquizado/" class="btn btn-sm btn-primary btn-block" target="_blank">Imprimir lista de ramais</a>
+    <style>
+    .dataTables_filter {
+    display: none;
+    }
+    .fonteTable{
+    font-size:12px;
+    }
+    </style>
+
+    <br>
+    <div class="panel panel-default">
+        <div class="panel-heading">Pesquisa de Ramais</div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-sm-10">
+                    <div class="form-group form-inline">
+                        <label for="procura">Digite o setor ou pessoa:</label>
+                        <input class="form-control" id="procura" size="80" autofocus></input>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <a href="/relatorios/hierarquizado/" class="btn btn-sm btn-primary btn-block" target="_blank">Imprimir lista de ramais</a>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-12">
-            <table id="tabRamais" class="table table-striped table-hover table-bordered fonteTable" width="100%" cellspacing="0"></table>
-        </div>
-    </div>
-</div>
+    <table id="tabRamais" class="table table-striped table-hover table-bordered fonteTable" width="100%" cellspacing="0"></table>
 {% endblock %}
 
 
