@@ -44,11 +44,17 @@ $(document).ready(function() {
             data
                 .replace( /\n/g, ' ' )
                 .replace( /[áâàäã]/g, 'a' )
+                .replace( /[ÁÂÀÃ]/g, 'A' )
                 .replace( /[éêèë]/g, 'e' )
+                .replace( /[ÉÈÊẼ]/g, 'E' )
                 .replace( /[íîìï]/g, 'i' )
+                .replace( /[ÍÌĨÎ]/g, 'I' )
                 .replace( /[óôòöã]/g, 'o' )
+                .replace( /[ÓÒÔÕ]/g, 'O' )
                 .replace( /[úûùü]/g, 'u' )
-                .replace( /ç/g, 'c' ) :
+                .replace( /[ÚÙŨÛ]/g, 'U' )
+                .replace( /ç/g, 'c' )
+                .replace( /Ç/g, 'C' ) :
             data;
     };
     //aqui eh o datatable
