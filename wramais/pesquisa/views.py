@@ -1,21 +1,13 @@
 # -*- coding: utf-8 -*-
 from django.http import HttpResponse
-from django.core.urlresolvers import reverse_lazy
-from django.core.serializers.json import DjangoJSONEncoder
 from django.contrib.messages.views import SuccessMessageMixin
 from django.views.generic.edit import FormView
-from django.http import JsonResponse
-from django.shortcuts import render_to_response
 import json
-from django.core import serializers
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.contrib import messages
-
 from wramais.cadastro.models import VPessoa, Ramal
 from .forms import RamalPesquisaForm
 from django.db import connections
 from restless.views import Endpoint
-from pprint import pprint
+from django.shortcuts import render
 
 #--------------------------------------------------------------------------------------
 # View para pesquisa de setores/pessoas/ramais
@@ -50,6 +42,10 @@ class PesquisaRamaisView(SuccessMessageMixin, FormView):
 		context['lista_ramais'] = lista_ramais
 
 		return self.render_to_response(context)
+
+def PesquisaRamaisJsonView(request):
+	context = {}
+	return render(request,'pesquisa/index2.html',context)
 
 
 class PesquisaRamaisIntranetView(Endpoint):

@@ -5,19 +5,18 @@ from django.conf import settings
 from django.conf.urls import include, url
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.views.generic import TemplateView
 from django.views import defaults as default_views
-from wramais.pesquisa.views import PesquisaRamaisView
+from wramais.pesquisa.views import PesquisaRamaisJsonView
 
 urlpatterns = [
-    # Your stuff: custom urls includes go here
+
     url(r'^cadastro/', include('wramais.cadastro.urls', namespace='cadastro')),
     url(r'^autentica/', include('wramais.autentica.urls', namespace='autentica')),
     url(r'^relatorios/', include('wramais.relatorios.urls', namespace='relatorios')),
     url(r'^pesquisa/', include('wramais.pesquisa.urls', namespace='pesquisa')),
-    url(r'^$', PesquisaRamaisView.as_view(template_name='pesquisa/index.html'), name='index'),
+    url(r'^$', PesquisaRamaisJsonView),
 
-    # Django Admin, use {% url 'admin:index' %}
+
     url(settings.ADMIN_URL, admin.site.urls),
 
 
