@@ -57,7 +57,8 @@ THIRD_PARTY_APPS = [
      'compressor',
      'django_python3_ldap',
      'ldapdb',
-     'easy_pdf'
+     'easy_pdf',
+     'restless',
 ]
 
 # Apps specific for this project go here.
