@@ -62,3 +62,19 @@ class Ramal(models.Model):
 
 	def __str__(self):
 		return self.setor.set_nome + '-' + self.pessoa.pes_nome
+
+#---------------------------------------------------------------------------------------------
+# Model para a tabela RAMAL_ESPECIAL
+#---------------------------------------------------------------------------------------------
+@python_2_unicode_compatible
+class RamalEspecial(models.Model):	
+
+	setor = models.CharField(max_length=500)
+	pessoa = models.CharField(max_length=500)
+	numero = models.CharField(max_length=200)
+
+	def __unicode__(self):
+		return self.setor + '-' + self.pessoa
+
+	def __str__(self):
+		return self.setor + '-' + self.pessoa

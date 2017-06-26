@@ -2,7 +2,7 @@
 
 from django.test import TestCase, RequestFactory
 from unittest.mock import patch, MagicMock, Mock
-from ..models import VSetor, VPessoa, Ramal
+from ..models import VSetor, VPessoa, Ramal, RamalEspecial
 from django.db import IntegrityError, DataError
 import os
 
@@ -49,3 +49,28 @@ class CadastroTestCase(TestCase):
 		vsetor = VSetor.objects.get(pk=171)
 		with self.assertRaises(IntegrityError):
 			ramal = Ramal.objects.create(setor=vsetor, numero=None)
+
+class RamalEspecialTestCase(TestCase):
+	fixtures = ['ramal_especial.json']
+
+	def setUp(self):
+		super(RamalEspecialTestCase, self).setUp()
+
+	def test_dummy(self):
+		self.assertEqual(1, 1)
+
+	def test_ramal_especial_insere_ok(self):
+		ramal_especial = RamalEspecial.objects.create(setor='Caixa Econômica Federal', pessoa='Zaca Zacariano', numero='4444-3333')
+		self.assertEqual(ramal_especial.pessoa, 'Zaca Zacariano')
+
+	def test_ramal_especial_setor_erro(self):
+		with self.assertRaises(IntegrityError):
+			ramal_especial = RamalEspecial.objects.create(setor=None, pessoa='Zaca Zacariano', numero='1234')
+
+	def test_ramal_especial_pessoa_erro(self):
+		with self.assertRaises(IntegrityError):
+			ramal_especial = RamalEspecial.objects.create(setor='Caixa Econômica Federal', pessoa=None, numero='1234')
+
+	def test_ramal_especial_numero_erro(self):
+		with self.assertRaises(IntegrityError):
+			ramal_especial = RamalEspecial.objects.create(setor='Caixa Econômica Federal', pessoa='Zaca Zacariano', numero=None)
