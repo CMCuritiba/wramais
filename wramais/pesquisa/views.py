@@ -51,7 +51,7 @@ def PesquisaRamaisJsonView(request):
 class PesquisaRamaisIntranetView(Endpoint):
     def get(self, request):
         cursor = connections['default'].cursor()
-        cursor.execute("select upper(v_setor.set_nome), upper(v_pessoa.pes_nome), numero from telefonia.cadastro_ramal left join telefonia.v_pessoa on cadastro_ramal.pessoa_id = v_pessoa.pes_matricula left join telefonia.v_setor on cadastro_ramal.setor_id = v_setor.set_id order by v_setor.set_nome")
+        cursor.execute("select upper(v_setor.set_nome), upper(v_pessoa.pes_nome), numero from cadastro_ramal left join v_pessoa on cadastro_ramal.pessoa_id = v_pessoa.pes_matricula left join v_setor on cadastro_ramal.setor_id = v_setor.set_id order by v_setor.set_nome")
         json_data = json.dumps(cursor.fetchall(), sort_keys=True, indent=4)
         json_data = "{\"data\": " + json_data + "}"
         #print(json_data)

@@ -74,6 +74,18 @@
                 {% endfor %}
             </table>
         {% endif %}
+
+        <h2 align="center">Lista de Ramais Especiais</h2>
+        {% if lista_ramais_especiais %}
+            <table class="bordered">
+                {% regroup lista_ramais_especiais by setor as lista_agrupada %}
+                {% for item in lista_agrupada %}
+                    {% for ramal in item.list %}
+                        <td width="2400px">{{ ramal.setor|formata_setor }}</td><td width="800px">{{ ramal.pessoa|formata_pessoa }}</td><td align='right' width="80px">{{ ramal.numero }}</td></tr>
+                    {% endfor %}
+                {% endfor %}
+            </table>
+        {% endif %}
     </div>
     </div>
 {% endblock %}   
