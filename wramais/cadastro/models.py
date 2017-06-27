@@ -70,7 +70,7 @@ class Ramal(models.Model):
 class RamalEspecial(models.Model):	
 
 	setor = models.CharField(max_length=500)
-	pessoa = models.CharField(max_length=500)
+	pessoa = models.CharField(max_length=500,blank=True)
 	numero = models.CharField(max_length=200)
 
 	def __unicode__(self):
