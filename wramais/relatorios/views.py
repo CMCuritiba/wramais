@@ -11,7 +11,7 @@ from django.core import serializers
 from easy_pdf.views import PDFTemplateView
 from django.contrib import messages
 
-from wramais.cadastro.models import VPessoa, VSetor, Ramal
+from wramais.cadastro.models import VPessoa, VSetor, Ramal, RamalEspecial
 from wramais.cadastro.util.seguranca.seguranca import RamaisLoginRequired
 
 class RelatorioHierarquizadoView(PDFTemplateView):
@@ -26,8 +26,12 @@ class RelatorioHierarquizadoView(PDFTemplateView):
 		#self.lista_ramais = Ramal.objects.order_by('setor__set_id')
 		self.lista_ramais = Ramal.objects.all()
 		self.lista_ramais = self.lista_ramais.filter(setor__set_ativo=True)
+
+		self.lista_ramais_especiais = RamalEspecial.objects.all().order_by('setor', 'pessoa')
 		
 		context['lista_ramais'] = self.lista_ramais
+		context['lista_ramais_especiais'] = self.lista_ramais_especiais
+		
 		return context
 
 	def get(self, request, *args, **kwargs):

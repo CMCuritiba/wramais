@@ -1,0 +1,20 @@
+[
+	{
+        "model": "cadastro.ramalespecial", 
+        "fields": {
+            "id": 1, 
+            "setor": "Caixa Econômica Federal",
+            "pessoa": "Zaca Zacariano",
+            "numero": "4444-3333"
+        }
+    },
+    {
+        "model": "cadastro.ramalespecial", 
+        "fields": {
+            "id": 1, 
+            "setor": "Caixa Econômica Federal",
+            "pessoa": "Nosfe Nosferatiano",
+            "numero": "3333-4444"
+        }
+    }
+]
