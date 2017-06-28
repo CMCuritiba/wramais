@@ -20,11 +20,11 @@
                 <div class="col-sm-10">
                     <div class="form-group form-inline">
                         <label for="procura">Digite o setor ou pessoa:</label>
-                        <input class="form-control" id="procura" size="80" autofocus></input>
+                        <input class="form-control" onblur="this.value=this.value.toUpperCase()" id="procura" size="80" autofocus></input>
                     </div>
                 </div>
                 <div class="col-sm-2">
-                    <a href="/relatorios/hierarquizado/" class="btn btn-sm btn-primary btn-block" target="_blank">Imprimir lista de ramais</a>
+                    <a href="/relatorios/hierarquizado/" class="btn btn-sm btn-primary btn-block" target="_blank"><span class="glyphicon glyphicon-print"></span> Imprimir lista de ramais</a>
                 </div>
             </div>
         </div>
