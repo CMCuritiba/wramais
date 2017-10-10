@@ -209,7 +209,7 @@ def git_update():
 
 @task 
 def cria_links():
-	if env.envioronment == 'staging':
+	if env.environment == 'staging':
 		sudo('ln -sf {}/deploy/staging/supervisor.conf /etc/supervisor/conf.d/wramais.conf'.format(PROJECT_ROOT))
 		sudo('ln -sf {}/deploy/staging/nginx.conf /etc/nginx/sites-enabled/wramais'.format(PROJECT_ROOT))
 		sudo('chmod a+x {}/deploy/staging/run.sh'.format(PROJECT_ROOT))
