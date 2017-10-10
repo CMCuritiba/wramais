@@ -31,15 +31,17 @@ def staging():
 	env.virtualenv = '/usr/share/envs/wramais'
 	env.activate = 'source /usr/share/envs/wramais/bin/activate'
 	env.wwwdata = 'www-data'
-	env.python_location = '/usr/bin/python3.4'
+	env.python_location = '/usr/bin/python3.5'
 
 @task
 def production():
-	env.hosts = []
+	env.hosts = ['sucupira.cmc.pr.gov.br']
 	env.environment = 'production'	
-	env.user = 'www-data'
-	env.virtualenv = ''
-	env.activate = ''
+	env.user = 'suporte'
+	env.virtualenv = '/usr/share/envs/wramais'
+	env.activate = 'source /usr/share/envs/wramais/bin/activate'
+	env.wwwdata = 'www-data'
+	env.python_location = '/usr/bin/python3.5'
 
 # ---------------------------------------------------------------------------------------------------------------
 # NÃO MUDE NADA ABAIXO !!!!!!!
@@ -128,36 +130,36 @@ def bootstrap():
 	# Atualiza código para o servidor de aplicação
 
 	# git, nginx, supervisor e memcached
-	sudo('aptitude update')
-	sudo('aptitude install git')
-	sudo('aptitude install supervisor')
-	sudo('aptitude install nginx')
-	sudo('aptitude install memcached')
+	sudo('apt-get update')
+	sudo('apt-get install git')
+	sudo('apt-get install supervisor')
+	sudo('apt-get install nginx')
+	sudo('apt-get install memcached')
 	# bibliotecas diversas usadas pelo projeto (ldap, xmlm, ssl, etc) 
-	sudo('aptitude install libpq-dev')
-	sudo('aptitude install python-dev')
-	#sudo('apt-get install python3.5-dev')
-	sudo('aptitude install python3.4-dev')
-	sudo('aptitude install python-pip')
-	sudo('aptitude install python-virtualenv')
-	sudo('aptitude install libfreetype6-dev')
-	sudo('aptitude install libncurses5-dev')
-	sudo('aptitude install libxml2-dev')
-	sudo('aptitude install libxslt1-dev')
-	sudo('aptitude install zlib1g-dev')
-	sudo('aptitude install libffi-dev')
-	sudo('aptitude install libsasl2-dev')
-	sudo('aptitude install libldap2-dev')
-	sudo('aptitude install libssl-dev')
-	# Para python 3.4 necessário bibliotecas abaixo:
-	sudo('aptitude install libpcap0.8-dev')
-	sudo('aptitude install python3-setuptools')
-	sudo('aptitude install libjpeg62-turbo-dev')
+	sudo('apt-get install libpq-dev')
+	sudo('apt-get install python-dev')
+	sudo('apt-get install python3.5-dev')
 
-	sudo('aptitude install curl')
+	sudo('apt-get install python-pip')
+	sudo('apt-get install python-virtualenv')
+	sudo('apt-get install libfreetype6-dev')
+	sudo('apt-get install libncurses5-dev')
+	sudo('apt-get install libxml2-dev')
+	sudo('apt-get install libxslt1-dev')
+	sudo('apt-get install zlib1g-dev')
+	sudo('apt-get install libffi-dev')
+	sudo('apt-get install libsasl2-dev')
+	sudo('apt-get install libldap2-dev')
+	sudo('apt-get install libssl-dev')
+	# Para python 3.4 necessário bibliotecas abaixo:
+	sudo('apt-get install libpcap0.8-dev')
+	sudo('apt-get install python3-setuptools')
+	sudo('apt-get install libjpeg62-turbo-dev')
+
+	sudo('apt-get install curl')
 	# baixar o node e instalar
-	sudo('curl -sL https://deb.nodesource.com/setup_6.x | bash -')
-	sudo('aptitude install -y nodejs')
+	sudo('curl -sL https://deb.nodesource.com/setup_8.x | bash -')
+	sudo('apt-get install -y nodejs')
 	sudo('npm install -g bower')
 
 	# Cria os diretórios e permissões necessários 
@@ -168,7 +170,7 @@ def bootstrap():
 	cria_envs()
 	cria_html()
 	sudo('git clone {} {}'.format(REPO, PROJECT_ROOT))
-	
+
 	with cd(PROJECT_ROOT):
 		# Cria o ambiente virtual do projeto 
 		sudo('virtualenv --python={} {}'.format(env.python_location, env.virtualenv))
@@ -207,9 +209,16 @@ def git_update():
 
 @task 
 def cria_links():
-	sudo('ln -sf {}/deploy/staging/supervisor.conf /etc/supervisor/conf.d/wramais.conf'.format(PROJECT_ROOT))
-	sudo('ln -sf {}/deploy/staging/nginx.conf /etc/nginx/sites-enabled/wramais'.format(PROJECT_ROOT))
-	sudo('chmod a+x {}/deploy/staging/run.sh'.format(PROJECT_ROOT))
+	if env.envioronment == 'staging':
+		sudo('ln -sf {}/deploy/staging/supervisor.conf /etc/supervisor/conf.d/wramais.conf'.format(PROJECT_ROOT))
+		sudo('ln -sf {}/deploy/staging/nginx.conf /etc/nginx/sites-enabled/wramais'.format(PROJECT_ROOT))
+		sudo('chmod a+x {}/deploy/staging/run.sh'.format(PROJECT_ROOT))
+	elif env.environment == 'production':
+		sudo('ln -sf {}/deploy/production/supervisor.conf /etc/supervisor/conf.d/wramais.conf'.format(PROJECT_ROOT))
+		sudo('ln -sf {}/deploy/production/nginx.conf /etc/nginx/sites-enabled/wramais'.format(PROJECT_ROOT))
+		sudo('chmod a+x {}/deploy/production/run.sh'.format(PROJECT_ROOT))
+	else:
+		print('Nenhum ambiente selecionado. Defina staging ou production.')
 
 @task
 def restart_nginx_supervisor():
