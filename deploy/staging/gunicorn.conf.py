@@ -1,3 +1,3 @@
-bind = '127.0.0.1:8889'  
+bind = 'unix:/var/run/webapps/ramais/gunicorn.sock'
 workers = 2  
 timeout = 30  
