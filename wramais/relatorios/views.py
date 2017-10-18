@@ -17,6 +17,7 @@ from wramais.cadastro.util.seguranca.seguranca import RamaisLoginRequired
 class RelatorioHierarquizadoView(PDFTemplateView):
 	template_name = "relatorios/hierarquizado.html"
 	lista_ramais = None
+	#pdf_filename = "lista_ramais.pdf"
 
 	def get_context_data(self, **kwargs):
 		context = super(RelatorioHierarquizadoView, self).get_context_data(**kwargs)
