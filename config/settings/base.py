@@ -59,11 +59,11 @@ THIRD_PARTY_APPS = [
      'ldapdb',
      'easy_pdf',
      'restless',
+     'autentica',
 ]
 
 # Apps specific for this project go here.
 LOCAL_APPS = [
-    'wramais.autentica.apps.AutenticaConfig',
     'wramais.cadastro.apps.CadastroConfig',
     'wramais.relatorios.apps.RelatoriosConfig',
     'wramais.pesquisa.apps.PesquisaConfig',
@@ -376,3 +376,7 @@ BOWER_INSTALLED_APPS = (
 # ------------------------------------------------------------------------------
 
 AUTH_USER_MODEL = 'autentica.User'
+
+# SERVIDOR DE MICRO SERVICOS
+# ------------------------------------------------------------------------------
+MSCMC_SERVER = env('MSCMC_SERVER')

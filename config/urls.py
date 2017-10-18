@@ -7,11 +7,12 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.views import defaults as default_views
 from wramais.pesquisa.views import PesquisaRamaisJsonView
+from autentica.util.mixin import CMCLoginRequired
 
 urlpatterns = [
 
     url(r'^cadastro/', include('wramais.cadastro.urls', namespace='cadastro')),
-    url(r'^autentica/', include('wramais.autentica.urls', namespace='autentica')),
+    url(r'^autentica/', include('autentica.urls', namespace='autentica')),
     url(r'^relatorios/', include('wramais.relatorios.urls', namespace='relatorios')),
     url(r'^pesquisa/', include('wramais.pesquisa.urls', namespace='pesquisa')),
     url(r'^$', PesquisaRamaisJsonView),
