@@ -12,7 +12,7 @@ ENVS = '/usr/share/envs'
 PROJECT_ROOT = WEBAPPS + '/%s' % PROJECT_NAME
 REPO = 'https://github.com/CMCuritiba/wramais.git'
 #REPO = 'alexandre.odoni@gitlab.cmc.pr.gov.br:desenv/wramais.git'
-USERAPP = 'cmc-apps'
+USERAPP = 'www-data'
 
 env.hosts = []
 
@@ -206,6 +206,12 @@ def git_update():
 	with cd(PROJECT_ROOT):
 		# Atualiza servidor com última versão do master
 		sudo('git pull origin master')
+		if env.environment == 'staging':
+			sudo('chmod a+x {}/deploy/staging/run.sh'.format(PROJECT_ROOT))
+		elif env.environment == 'production':
+			sudo('chmod a+x {}/deploy/production/run.sh'.format(PROJECT_ROOT))
+		else:
+			print('Nenhum ambiente selecionado. Defina staging ou production.')
 
 @task 
 def cria_links():
