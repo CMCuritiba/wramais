@@ -64,7 +64,7 @@ python-decouple==3.0
 DjangoRestless==0.0.10
 
 # Autentica
-https://github.com/CMCuritiba/django-cmcldapauth/raw/master/dist/django-cmcldapauth-0.1.tar.gz
+https://github.com/CMCuritiba/django-cmcldapauth/raw/master/dist/django-cmcldapauth-0.2.tar.gz
 
 # SimpleJSON
 simplejson

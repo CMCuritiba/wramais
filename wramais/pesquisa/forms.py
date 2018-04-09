@@ -13,31 +13,9 @@ from django.conf import settings
 from decimal import Decimal
 from django import forms
 
-from wramais.cadastro.models import VSetor, VPessoa, Ramal
+from wramais.cadastro.models import Ramal
 
 from datetime import datetime
 
 class RamalPesquisaForm(forms.Form):
-
-	setor = forms.ModelChoiceField(label='Setor', queryset=VSetor.objects.filter(set_ativo=True).order_by('set_nome'), required=True, empty_label='TODOS OS SETORES')
-	pessoa = forms.ModelChoiceField(label='Pessoa', queryset=VPessoa.objects.all().order_by('pes_nome'), required=False, empty_label='GERAL')
-
-	def __init__(self, *args, **kwargs):
-		super(RamalPesquisaForm, self).__init__(*args, **kwargs)
-
-		self.helper = FormHelper()
-		self.helper.form_tag = False
-		self.helper.layout = Layout(
-			Div(
-				Div('setor', css_class='col-md-6',),
-				Div('pessoa', css_class='col-md-6',),
-				css_class='col-md-12 row',
-			),
-			Div(
-				Div(
-					StrictButton('Pesquisar', css_class="btn-primary btn", id='btn_search', onclick='pesquisa()'),
-					css_class='col-xs-12',
-				),
-				css_class='col-xs-12 row',
-			),
-		)
+	pass
