@@ -6,5 +6,4 @@ from . import views
 
 urlpatterns = [
 	url(r'^$', views.PesquisaRamaisJsonView),
-    url(r'^api/ramais$', views.PesquisaRamaisIntranetView.as_view()),
 ]
