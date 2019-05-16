@@ -1,3 +1,6 @@
+ESTE PROJETO FOI ARQUIVADO EM DETRIMENTO DESTE NOVO AQUI: https://github.com/CMCuritiba/ramais
+
+
 Aplicação Ramais CMC
 ####################
 
